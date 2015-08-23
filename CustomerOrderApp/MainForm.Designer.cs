@@ -231,7 +231,6 @@
             this.customerDataGridView.Size = new System.Drawing.Size(787, 249);
             this.customerDataGridView.TabIndex = 1;
             this.customerDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.customerDataGridView_CellDoubleClick);
-
             // 
             // orderDataGridView
             // 
@@ -371,6 +370,7 @@
             this.bindingNavigatorAddNewItem1.RightToLeftAutoMirrorImage = true;
             this.bindingNavigatorAddNewItem1.Size = new System.Drawing.Size(23, 22);
             this.bindingNavigatorAddNewItem1.Text = "Add new";
+            this.bindingNavigatorAddNewItem1.Click += new System.EventHandler(this.bindingNavigatorAddNewItem1_Click);
             // 
             // bindingNavigatorDeleteItem1
             // 

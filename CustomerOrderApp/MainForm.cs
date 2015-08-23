@@ -130,6 +130,18 @@ namespace CustomerOrderApp
             }
         }
 
+        private void bindingNavigatorAddNewItem1_Click(object sender, EventArgs e)
+        {
+            Customer selectedCustomer = (Customer)customerBindingSource.Current;
+            OrderDetailsForm addNewOrderDialog = new OrderDetailsForm(selectedCustomer, _context);
+
+            addNewOrderDialog.Owner = this;
+            if (addNewOrderDialog.ShowDialog() == DialogResult.OK)
+            {
+                
+            }
+        }
+
         
     }
 }

@@ -12,3 +12,4 @@ D:\C#\projects\CustomerOrderApp\CustomerOrderApp\obj\Debug\CustomerOrderApp.exe
 D:\C#\projects\CustomerOrderApp\CustomerOrderApp\obj\Debug\CustomerOrderApp.pdb
 D:\C#\projects\CustomerOrderApp\CustomerOrderApp\obj\Debug\CustomerOrderApp.CustomerDetailsForm.resources
 D:\C#\projects\CustomerOrderApp\CustomerOrderApp\obj\Debug\CustomerOrderApp.MainForm.resources
+D:\C#\projects\CustomerOrderApp\CustomerOrderApp\obj\Debug\CustomerOrderApp.OrderDetailsForm.resources
