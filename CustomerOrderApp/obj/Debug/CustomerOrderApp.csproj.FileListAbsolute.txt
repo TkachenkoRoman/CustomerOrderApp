@@ -1,0 +1,14 @@
+D:\C#\projects\CustomerOrderApp\CustomerOrderApp\bin\Debug\CustomerOrderApp.exe.config
+D:\C#\projects\CustomerOrderApp\CustomerOrderApp\bin\Debug\CustomerOrderApp.exe
+D:\C#\projects\CustomerOrderApp\CustomerOrderApp\bin\Debug\CustomerOrderApp.pdb
+D:\C#\projects\CustomerOrderApp\CustomerOrderApp\bin\Debug\EntityFramework.dll
+D:\C#\projects\CustomerOrderApp\CustomerOrderApp\bin\Debug\EntityFramework.SqlServer.dll
+D:\C#\projects\CustomerOrderApp\CustomerOrderApp\bin\Debug\EntityFramework.xml
+D:\C#\projects\CustomerOrderApp\CustomerOrderApp\bin\Debug\EntityFramework.SqlServer.xml
+D:\C#\projects\CustomerOrderApp\CustomerOrderApp\obj\Debug\CustomerOrderApp.csprojResolveAssemblyReference.cache
+D:\C#\projects\CustomerOrderApp\CustomerOrderApp\obj\Debug\CustomerOrderApp.Properties.Resources.resources
+D:\C#\projects\CustomerOrderApp\CustomerOrderApp\obj\Debug\CustomerOrderApp.csproj.GenerateResource.Cache
+D:\C#\projects\CustomerOrderApp\CustomerOrderApp\obj\Debug\CustomerOrderApp.exe
+D:\C#\projects\CustomerOrderApp\CustomerOrderApp\obj\Debug\CustomerOrderApp.pdb
+D:\C#\projects\CustomerOrderApp\CustomerOrderApp\obj\Debug\CustomerOrderApp.CustomerDetailsForm.resources
+D:\C#\projects\CustomerOrderApp\CustomerOrderApp\obj\Debug\CustomerOrderApp.MainForm.resources
