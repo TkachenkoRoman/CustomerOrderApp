@@ -47,9 +47,11 @@
             this.textBoxDescription = new System.Windows.Forms.TextBox();
             this.buttonSaveOrder = new System.Windows.Forms.Button();
             this.buttonCancelOrder = new System.Windows.Forms.Button();
+            this.errorProviderOrder = new System.Windows.Forms.ErrorProvider(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.customerBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderOrder)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -72,7 +74,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(293, 132);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(317, 132);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // label1
@@ -95,22 +97,28 @@
             // 
             // textBoxNumber
             // 
-            this.textBoxNumber.Location = new System.Drawing.Point(79, 3);
+            this.textBoxNumber.Location = new System.Drawing.Point(85, 3);
             this.textBoxNumber.Name = "textBoxNumber";
             this.textBoxNumber.Size = new System.Drawing.Size(200, 20);
             this.textBoxNumber.TabIndex = 3;
             // 
             // dateTimePickerDueTime
             // 
-            this.dateTimePickerDueTime.Location = new System.Drawing.Point(79, 69);
+            this.dateTimePickerDueTime.Checked = false;
+            this.dateTimePickerDueTime.CustomFormat = " ";
+            this.dateTimePickerDueTime.Location = new System.Drawing.Point(85, 69);
             this.dateTimePickerDueTime.Name = "dateTimePickerDueTime";
+            this.dateTimePickerDueTime.ShowCheckBox = true;
             this.dateTimePickerDueTime.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerDueTime.TabIndex = 1;
             // 
             // dateTimePickerProcessedTime
             // 
-            this.dateTimePickerProcessedTime.Location = new System.Drawing.Point(79, 102);
+            this.dateTimePickerProcessedTime.Checked = false;
+            this.dateTimePickerProcessedTime.CustomFormat = " ";
+            this.dateTimePickerProcessedTime.Location = new System.Drawing.Point(85, 102);
             this.dateTimePickerProcessedTime.Name = "dateTimePickerProcessedTime";
+            this.dateTimePickerProcessedTime.ShowCheckBox = true;
             this.dateTimePickerProcessedTime.Size = new System.Drawing.Size(200, 20);
             this.dateTimePickerProcessedTime.TabIndex = 4;
             // 
@@ -134,7 +142,7 @@
             // 
             // textBoxAmount
             // 
-            this.textBoxAmount.Location = new System.Drawing.Point(79, 36);
+            this.textBoxAmount.Location = new System.Drawing.Point(85, 36);
             this.textBoxAmount.Name = "textBoxAmount";
             this.textBoxAmount.Size = new System.Drawing.Size(200, 20);
             this.textBoxAmount.TabIndex = 2;
@@ -207,28 +215,34 @@
             // 
             // buttonSaveOrder
             // 
-            this.buttonSaveOrder.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.buttonSaveOrder.Location = new System.Drawing.Point(400, 298);
             this.buttonSaveOrder.Name = "buttonSaveOrder";
             this.buttonSaveOrder.Size = new System.Drawing.Size(75, 23);
             this.buttonSaveOrder.TabIndex = 2;
             this.buttonSaveOrder.Text = "Save";
             this.buttonSaveOrder.UseVisualStyleBackColor = true;
+            this.buttonSaveOrder.Click += new System.EventHandler(this.buttonSaveOrder_Click);
             // 
             // buttonCancelOrder
             // 
-            this.buttonCancelOrder.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancelOrder.CausesValidation = false;
             this.buttonCancelOrder.Location = new System.Drawing.Point(481, 298);
             this.buttonCancelOrder.Name = "buttonCancelOrder";
             this.buttonCancelOrder.Size = new System.Drawing.Size(75, 23);
             this.buttonCancelOrder.TabIndex = 3;
             this.buttonCancelOrder.Text = "Cancel";
             this.buttonCancelOrder.UseVisualStyleBackColor = true;
+            this.buttonCancelOrder.Click += new System.EventHandler(this.buttonCancelOrder_Click);
+            // 
+            // errorProviderOrder
+            // 
+            this.errorProviderOrder.ContainerControl = this;
             // 
             // OrderDetailsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.ClientSize = new System.Drawing.Size(568, 333);
             this.Controls.Add(this.buttonCancelOrder);
             this.Controls.Add(this.buttonSaveOrder);
@@ -239,6 +253,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.customerBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProviderOrder)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -263,5 +278,6 @@
         private System.Windows.Forms.Button buttonAddNewClient;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.BindingSource customerBindingSource;
+        private System.Windows.Forms.ErrorProvider errorProviderOrder;
     }
 }

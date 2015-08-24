@@ -38,10 +38,20 @@ namespace CustomerOrderApp
 
         private void customerBindingSource_CurrentChanged(object sender, EventArgs e)
         {
-            int customerId = ((Customer)customerBindingSource.Current).CustomerId;
+            filterDataInOrderGrid();
+        }
+
+        private void filterDataInOrderGrid()
+        {
+
+            int customerId = 0;
+            if (customerBindingSource.Current != null)
+                customerId = ((Customer)customerBindingSource.Current).CustomerId;
             // Display filtered data in order grid
-            if (customerId != null)
-                this.orderBindingSource.DataSource = _context.Order.Local.Where(x => x.CustomerId == customerId);
+            if (customerId != 0)
+                this.orderBindingSource.DataSource = _context.Order.Local.Where(x => x.CustomerId == customerId).ToList();
+            else
+                this.orderBindingSource.DataSource = _context.Order.Local.ToBindingList();
         }
 
         //private void customerDataGridView_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
@@ -65,28 +75,38 @@ namespace CustomerOrderApp
         private void customerBindingNavigatorDeleteItem_Click(object sender, EventArgs e)
         {
             Customer currentCustomer = (Customer)this.customerBindingSource.Current;
-            if (currentCustomer.Order.Count > 0)
-            {
-                // warning with cascade deleted order amount
-                string message = "In case of deleting '" + currentCustomer.Name.ToString() +
-                                 "' (id=" + currentCustomer.CustomerId.ToString() + "), " +
-                                 currentCustomer.Order.Count.ToString() + " order(s) will be deleted." +
-                                 "Do you want to continue?";
-                DialogResult dialogResult = MessageBox.Show(message, "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                if (dialogResult == DialogResult.Yes)
+            if (currentCustomer != null)
+            { 
+                if (currentCustomer.Order.Count > 0)
                 {
-                    this.customerBindingSource.RemoveCurrent();
+                    // warning with cascade deleted order amount
+                    string message = "In case of deleting '" + currentCustomer.Name.ToString() +
+                                     "' (id=" + currentCustomer.CustomerId.ToString() + "), " +
+                                     currentCustomer.Order.Count.ToString() + " order(s) will be deleted." +
+                                     "Do you want to continue?";
+                    DialogResult dialogResult = MessageBox.Show(message, "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        this.customerBindingSource.RemoveCurrent();
+                    }
                 }
+                else
+                    this.customerBindingSource.RemoveCurrent();
+                //// show all (unfiltered) orders after deleting one
+                //this.orderBindingSource.DataSource = _context.Order.Local.ToBindingList();
+                filterDataInOrderGrid();
             }
-            else
-                this.customerBindingSource.RemoveCurrent();
-            // show all (unfiltered) orders after deleting one
-            this.orderBindingSource.DataSource = _context.Order.Local.ToBindingList(); 
         }
 
         private void orderBindingNavigatorDeleteItem_Click(object sender, EventArgs e)
         {
-            this.orderBindingSource.RemoveCurrent();
+            Order currentOrder = (Order)orderBindingSource.Current;
+            if (currentOrder != null)
+            {
+                orderBindingSource.RemoveCurrent();
+                _context.Order.Remove(currentOrder);
+                //orderDataGridView.Refresh();
+            }           
         }
 
         private void bindingNavigatorAddNewItem_Click(object sender, EventArgs e)
@@ -94,7 +114,8 @@ namespace CustomerOrderApp
             CustomerDetailsForm addNewCustomerDialog = new CustomerDetailsForm();
 
             addNewCustomerDialog.Owner = this;
-            if (addNewCustomerDialog.ShowDialog() == DialogResult.OK)
+            addNewCustomerDialog.ShowDialog();
+            if (addNewCustomerDialog.IsSaved)
             {
                 Customer newCustomer = addNewCustomerDialog.Customer;
                 _context.Customer.Add(newCustomer);
@@ -115,7 +136,8 @@ namespace CustomerOrderApp
             CustomerDetailsForm editCustomerDialog = new CustomerDetailsForm(currentCustomer);
 
             editCustomerDialog.Owner = this;
-            if (editCustomerDialog.ShowDialog() == DialogResult.OK)
+            editCustomerDialog.ShowDialog();
+            if (editCustomerDialog.IsSaved)
             {
                 Customer editedCustomer = editCustomerDialog.Customer;
                 _context.Entry(editedCustomer).State = EntityState.Modified;
@@ -126,7 +148,9 @@ namespace CustomerOrderApp
                 catch (Exception ex)
                 {
                     Debug.WriteLine("***************" + ex);
+                    return;
                 }
+                this.customerDataGridView.Refresh();
             }
         }
 
@@ -136,12 +160,31 @@ namespace CustomerOrderApp
             OrderDetailsForm addNewOrderDialog = new OrderDetailsForm(selectedCustomer, _context);
 
             addNewOrderDialog.Owner = this;
-            if (addNewOrderDialog.ShowDialog() == DialogResult.OK)
+            addNewOrderDialog.ShowDialog();
+            if (addNewOrderDialog.IsSaved)
             {
-                
+                filterDataInOrderGrid();
+                orderDataGridView.Refresh();
             }
         }
 
-        
+        private void orderDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Order selectedOrder = (Order)orderBindingSource.Current;
+            //Customer selectedCustomer = (Customer)_context.Customer.First(x => x.CustomerId == selectedOrder.CustomerId);
+            Customer selectedCustomer = selectedOrder.Customer;
+            OrderDetailsForm editOrderDialog = new OrderDetailsForm(selectedCustomer, _context, selectedOrder);
+            editOrderDialog.Owner = this;
+            editOrderDialog.ShowDialog();
+            if (editOrderDialog.IsSaved)
+            {
+                orderDataGridView.Refresh();
+            }
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _context.SaveChanges();
+        }
     }
 }
