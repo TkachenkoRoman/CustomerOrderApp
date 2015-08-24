@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.Entity;
 using System.Diagnostics;
@@ -38,10 +32,10 @@ namespace CustomerOrderApp
 
         private void customerBindingSource_CurrentChanged(object sender, EventArgs e)
         {
-            filterDataInOrderGrid();
+            FilterDataInOrderGrid();
         }
 
-        private void filterDataInOrderGrid()
+        private void FilterDataInOrderGrid()
         {
 
             int customerId = 0;
@@ -94,7 +88,7 @@ namespace CustomerOrderApp
                     this.customerBindingSource.RemoveCurrent();
                 //// show all (unfiltered) orders after deleting one
                 //this.orderBindingSource.DataSource = _context.Order.Local.ToBindingList();
-                filterDataInOrderGrid();
+                FilterDataInOrderGrid();
             }
         }
 
@@ -163,7 +157,7 @@ namespace CustomerOrderApp
             addNewOrderDialog.ShowDialog();
             if (addNewOrderDialog.IsSaved)
             {
-                filterDataInOrderGrid();
+                FilterDataInOrderGrid();
                 orderDataGridView.Refresh();
             }
         }

@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CustomerOrderApp
@@ -14,17 +9,17 @@ namespace CustomerOrderApp
     {
         public Customer Customer { get { return _customer; } }
         private Customer _customer;
-        private bool isEditForm;
+        private bool _isEditForm;
         public bool IsSaved { get; set; }
         public CustomerDetailsForm(Customer customer = null)
         {
-            isEditForm = false;
+            _isEditForm = false;
             _customer = new Customer();
             InitializeComponent();
             this.buttonCustomerCancel.CausesValidation = false;
             if (customer != null)
             {
-                isEditForm = true;
+                _isEditForm = true;
                 this._customer = customer;
                 this.textBoxCustomerId.Text = _customer.CustomerId.ToString();
                 this.textBoxCustomerId.ReadOnly = true;
@@ -71,7 +66,7 @@ namespace CustomerOrderApp
                 try
                 {
                     int temp = int.Parse(textBoxCustomerId.Text);
-                    if (!isUniqueCustomerId(temp) && !isEditForm)
+                    if (!IsUniqueCustomerId(temp) && !_isEditForm)
                     {
                         error = "Id already exists";
                         e.Cancel = true;
@@ -92,7 +87,7 @@ namespace CustomerOrderApp
             errorProviderCustomer.SetError(textBoxCustomerId, error);
         }
        
-        private bool isUniqueCustomerId(int id)
+        private bool IsUniqueCustomerId(int id)
         {
             CustomerContext context = new CustomerContext();
             if (context.Customer.Any(x => x.CustomerId == id))

@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.Entity;
 
@@ -15,9 +9,9 @@ namespace CustomerOrderApp
     public partial class OrderDetailsForm : Form
     {
         private CustomerContext _context;
-        private Order order;
+        private Order _order;
         public bool IsSaved { get; set; }
-        private bool updateMode;
+        private bool _updateMode;
         public OrderDetailsForm(Customer selectedCustomer, CustomerContext context, Order editOrder = null)
         {
             _context = context;
@@ -25,14 +19,14 @@ namespace CustomerOrderApp
             this.comboBoxClient.DataSource = _context.Customer.Local.ToBindingList();
             if (editOrder != null) // edit order
             {
-                order = editOrder;
-                updateMode = true;
-                setInitialData(editOrder); 
+                _order = editOrder;
+                _updateMode = true;
+                SetInitialData(editOrder); 
             }
             else // add new order
             {
-                order = new Order();
-                updateMode = false;
+                _order = new Order();
+                _updateMode = false;
                 if (selectedCustomer != null)
                     this.comboBoxClient.SelectedValue = selectedCustomer.CustomerId;
             }
@@ -46,7 +40,7 @@ namespace CustomerOrderApp
         }
 
 
-        private void setInitialData(Order editOrder)
+        private void SetInitialData(Order editOrder)
         {
             this.comboBoxClient.SelectedValue = editOrder.CustomerId;
             this.textBoxNumber.Text = editOrder.Number;
@@ -74,10 +68,10 @@ namespace CustomerOrderApp
 
         private void buttonAddNewClient_Click(object sender, EventArgs e)
         {
-            addNewClientDialog();
+            AddNewClientDialog();
         }
 
-        private void addNewClientDialog()
+        private void AddNewClientDialog()
         {
             CustomerDetailsForm addNewCustomerDialog = new CustomerDetailsForm();
 
@@ -111,29 +105,29 @@ namespace CustomerOrderApp
             textBoxDescription_Validating(textBoxDescription, new CancelEventArgs(false));
             if (!IsSaved) return;
 
-            order.CustomerId = (int)this.comboBoxClient.SelectedValue;
-            order.Number = this.textBoxNumber.Text;
-            order.Amount = Convert.ToInt32(this.textBoxAmount.Text);
+            _order.CustomerId = (int)this.comboBoxClient.SelectedValue;
+            _order.Number = this.textBoxNumber.Text;
+            _order.Amount = Convert.ToInt32(this.textBoxAmount.Text);
 
             if (this.dateTimePickerDueTime.Checked)
-                order.DueTime = this.dateTimePickerDueTime.Value;
+                _order.DueTime = this.dateTimePickerDueTime.Value;
             else
-                order.DueTime = null;
+                _order.DueTime = null;
 
             if (this.dateTimePickerProcessedTime.Checked)
-                order.ProcessedTime = this.dateTimePickerProcessedTime.Value;
+                _order.ProcessedTime = this.dateTimePickerProcessedTime.Value;
             else
-                order.ProcessedTime = null;
+                _order.ProcessedTime = null;
 
-            order.Description = this.textBoxDescription.Text;
+            _order.Description = this.textBoxDescription.Text;
 
-            if (updateMode)
+            if (_updateMode)
             {
-                _context.Entry(order).State = EntityState.Modified;
+                _context.Entry(_order).State = EntityState.Modified;
             }
             else
             {
-                _context.Order.Add(order);
+                _context.Order.Add(_order);
             }
             try
             {
